@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+   mysql:
+     image: mysql
+     environment:
+       MYSQL_DATABASE: muskooters
+       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+     volumes:
+       - mysql:/var/lib/mysql
+
+   mongo:
+     image: mongo
+     volumes:
+       - mongo:/data/db
+     environment:
+       MONGO_INITDB_ROOT_USERNAME: root
+       MONGO_INITDB_ROOT_PASSWORD: root
+
+   muskooter:
+     depends_on:
+       - mysql
+       - mongo
+     build: .
+     restart: always
+     environment:
+       MUSKOOTERS_PORT: :3412
+       MUSKOOTERS_MYSQL_URL: root:@tcp(mysql:3306)/muskooters
+       MUSKOOTERS_MONGO_USER: root
+       MUSKOOTERS_MONGO_PASS: root
+       MUSKOOTERS_MONGO_DB_NAME: muskooters
+       MUSKOOTERS_MIGRATION_DIR: /go/src/muskooters/migrations
+
+volumes:
+  mysql:
+  mongo:
