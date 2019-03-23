@@ -6,6 +6,7 @@ const (
 	Zeus   Role = "admin"
 	Hunter Role = "hunter"
 	Client Role = "client"
+	Scooter Role = "scooter"
 )
 
 type User struct {
