@@ -12,18 +12,17 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/sirupsen/logrus"
-	"muskooters/user"
+	"muskooters/user/routes"
 )
 
 const appName = "muskooters"
+var _ routes.Route
 
 func main() {
 	config.Init(appName)
 	defer initializer.Initialize()()
 
 	migup()
-	err := user.Add("daniel", "123", user.Hunter)
-	assert.Nil(err)
 
 	c := make(chan os.Signal)
 	signal.Notify(c, syscall.SIGHUP)

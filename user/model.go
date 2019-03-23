@@ -3,7 +3,7 @@ package user
 type Role string
 
 const (
-	Zeus   Role = "zeus"
+	Zeus   Role = "admin"
 	Hunter Role = "hunter"
 	Client Role = "client"
 )
@@ -11,6 +11,6 @@ const (
 type User struct {
 	ID       int    `json:"id"`
 	Username string `json:"username"`
-	Pass     string `json:"pass" db:"passwd"`
+	Password string `json:"password" db:"passwd"`
 	Role     Role   `json:"role"`
 }
