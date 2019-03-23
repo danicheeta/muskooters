@@ -3,8 +3,8 @@ package mongo
 import (
 	"github.com/globalsign/mgo"
 	"muskooters/services/config"
-	"octapus/services/assert"
-	"octapus/services/initializer"
+	"muskooters/services/assert"
+	"muskooters/services/initializer"
 )
 
 type initMongo struct{}
