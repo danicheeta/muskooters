@@ -26,6 +26,8 @@ type User struct {
 	Role     Role   `json:"role"`
 }
 
+var allRoles = []Role{Zeus, Hunter, Client, Scooter}
+
 // creates new user
 func Add(username, pass string, role Role) error {
 	q := fmt.Sprintf("insert into %s (username, passwd, role) values (?,?,?)", userTable)

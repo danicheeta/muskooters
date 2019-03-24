@@ -14,17 +14,9 @@ var muskooter *mgo.Database
 // Initialize the modules, its safe to call this as many time as you want.
 func (in initMongo) Initialize() func() {
 	mongoURL := config.MustString("MONGO_URL")
-	mongoUser := config.MustString("MONGO_USER")
-	mongoPass := config.MustString("MONGO_PASS")
 	mongoDBName := config.MustString("MONGO_DB_NAME")
 
-	session, err := mgo.DialWithInfo(&mgo.DialInfo{
-		Addrs:    []string{mongoURL},
-		Username: mongoUser,
-		Password: mongoPass,
-		Source:   "admin",
-		FailFast: true,
-	})
+	session, err := mgo.Dial(mongoURL)
 	assert.Nil(err)
 
 	err = session.Ping()

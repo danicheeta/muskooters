@@ -52,6 +52,11 @@ func register(c *gin.Context) {
 		return
 	}
 
+	if !assert.String(u.Username, u.Password) || !ensureRole(u.Role) {
+		framework.Error(c, http.StatusBadRequest, "invalid payload")
+		return
+	}
+
 	pwd, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	assert.Nil(err)
 
@@ -62,6 +67,16 @@ func register(c *gin.Context) {
 	c.JSON(http.StatusOK, struct {
 		Token string
 	}{t})
+}
+
+func ensureRole(r Role) bool {
+	for _, role := range allRoles {
+		if role == r {
+			return true
+		}
+	}
+
+	return false
 }
 
 type Route struct{}
