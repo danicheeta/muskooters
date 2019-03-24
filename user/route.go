@@ -1,22 +1,29 @@
-package routes
+package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"muskooters/services/framework"
+	"muskooters/user/middleware"
 	"golang.org/x/crypto/bcrypt"
 	"muskooters/services/assert"
-	"muskooters/user"
-	"muskooters/user/middleware"
 	"net/http"
 )
 
+func (Route) Routes(e *gin.Engine) {
+	g := e.Group("user")
+	g.POST("login", login)
+	g.Use(middleware.FetchToken)
+	g.POST("register", middleware.Auth(Zeus), register)
+}
+
 func login(c *gin.Context) {
-	var u user.User
+	var u User
 	if err := c.Bind(&u); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	dbuser, err := user.GetByName(u.Username)
+	dbuser, err := GetByName(u.Username)
 	if err != nil {
 		c.JSON(http.StatusNotFound, nil)
 		return
@@ -36,7 +43,7 @@ func login(c *gin.Context) {
 }
 
 func register(c *gin.Context) {
-	var u user.User
+	var u User
 	if err := c.Bind(&u); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
@@ -45,11 +52,17 @@ func register(c *gin.Context) {
 	pwd, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	assert.Nil(err)
 
-	err = user.Add(u.Username, string(pwd), u.Role)
+	err = Add(u.Username, string(pwd), u.Role)
 	assert.Nil(err)
 
 	t := middleware.GenToken(string(u.Role))
 	c.JSON(http.StatusOK, struct {
 		Token string
 	}{t})
+}
+
+type Route struct{}
+
+func init() {
+	framework.Register(Route{})
 }
