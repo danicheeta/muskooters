@@ -1,0 +1,220 @@
+{
+	"info": {
+		"name": "muskooters",
+		"_postman_id": "657b4cc8-c982-7e3b-1e11-41c144fb9f61",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"description": "",
+			"item": [
+				{
+					"name": "register hunter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.eGgxbz7c1pzRItKkrHpkEgBzhpsxiShn4trMPjopom8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"hunter122\",\n\t\"password\": \"123\",\n\t\"role\": \"hunter\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3412/hunter",
+							"host": [
+								"localhost"
+							],
+							"port": "3412",
+							"path": [
+								"hunter"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "register scooter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.eGgxbz7c1pzRItKkrHpkEgBzhpsxiShn4trMPjopom8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"scooter1\",\n\t\"password\": \"123\",\n\t\"role\": \"scooter\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3412/scooter",
+							"host": [
+								"localhost"
+							],
+							"port": "3412",
+							"path": [
+								"scooter"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "0.0.0.0:3412/login/user",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3412",
+					"path": [
+						"login",
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "set state",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2Nvb3RlciJ9.FsM8IwczZVSqrCVsieOQn1lGbj56wtBE5L2h3d0Gek0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"state\": \"Unknown\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3412/scooter/5c97c636aa47f81ca8693a45/state",
+					"host": [
+						"localhost"
+					],
+					"port": "3412",
+					"path": [
+						"scooter",
+						"5c97c636aa47f81ca8693a45",
+						"state"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get state",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3412/scooter/5c97c636aa47f81ca8693a45/state",
+					"host": [
+						"localhost"
+					],
+					"port": "3412",
+					"path": [
+						"scooter",
+						"5c97c636aa47f81ca8693a45",
+						"state"
+					]
+				},
+				"description": "only permissioned by admin"
+			},
+			"response": []
+		},
+		{
+			"name": "get bounties",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiaHVudGVyIn0.c0TqR8EMmfW8-wu6pcaVrQpd0Ygxy-EnZsRetDjMllI"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3412/hunter/bounty",
+					"host": [
+						"localhost"
+					],
+					"port": "3412",
+					"path": [
+						"hunter",
+						"bounty"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "login scooter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3412/login/scooter",
+					"host": [
+						"localhost"
+					],
+					"port": "3412",
+					"path": [
+						"login",
+						"scooter"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
