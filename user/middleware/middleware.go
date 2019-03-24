@@ -5,6 +5,7 @@ import (
 	"github.com/kataras/iris/core/errors"
 	"muskooters/user"
 	"net/http"
+	"muskooters/services/framework"
 )
 
 const contextRole = "role"
@@ -14,19 +15,14 @@ const contextRole = "role"
 // tokens are based on jwt on Authorization header
 func FetchToken(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
-	if authHeader == "" {
-		c.AbortWithError(http.StatusBadRequest, errors.New("invalid token"))
-		return
-	}
-
-	if len(authHeader) < 7 || authHeader[:6] != "bearer" {
-		c.AbortWithError(http.StatusBadRequest, errors.New("invalid token"))
+	if authHeader == "" || len(authHeader) < 8 || authHeader[:6] != "bearer" {
+		framework.Error(c, http.StatusUnauthorized, "invalid token")
 		return
 	}
 
 	role, err := getRoleFromToken(authHeader[7:])
 	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, errors.New("invalid token"))
+		framework.Error(c, http.StatusUnauthorized, "invalid jwt token")
 		return
 	}
 

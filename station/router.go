@@ -22,6 +22,7 @@ func (Route) Routes(e *gin.Engine) {
 	g.POST("", middleware.Auth(user.Zeus), registerScooter)
 }
 
+// create new scooter only with admin permission
 func registerScooter(c *gin.Context) {
 	s := NewScooter()
 	c.JSON(http.StatusOK, s)
@@ -39,7 +40,6 @@ func getScooterState(c *gin.Context) {
 	c.JSON(http.StatusOK, scooter)
 }
 
-// todo validation on id
 func setScooterState(c *gin.Context) {
 	var payload struct{
 		State string
