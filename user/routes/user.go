@@ -29,7 +29,7 @@ func login(c *gin.Context) {
 		return
 	}
 
-	t := middleware.GenToken(string(u.Role))
+	t := middleware.GenToken(string(dbuser.Role))
 	c.JSON(http.StatusOK, struct {
 		Token string
 	}{t})
