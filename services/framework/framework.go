@@ -21,6 +21,7 @@ type initer struct {
 func (i *initer) Initialize() func() {
 	port := config.MustString("PORT")
 	e := gin.New()
+	e.Use(Recovery)
 
 	for i := range all {
 		all[i].Routes(e)

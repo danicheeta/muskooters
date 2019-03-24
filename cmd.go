@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/pressly/goose"
 	"muskooters/services/assert"
 	"muskooters/services/config"
 	"muskooters/services/initializer"
@@ -12,14 +10,18 @@ import (
 	"os/signal"
 	"syscall"
 
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/pressly/goose"
+
+	"muskooters/user"
+
 	"github.com/sirupsen/logrus"
-	"muskooters/user/routes"
 )
 
 const appName = "muskooters"
 
 var (
-	_ routes.Route
+	_ user.Route
 	_ station.Route
 )
 

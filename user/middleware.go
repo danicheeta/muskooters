@@ -1,16 +1,15 @@
-package middleware
+package user
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/kataras/iris/core/errors"
-	"muskooters/user"
-	"net/http"
 	"muskooters/services/framework"
+	"muskooters/user/middleware"
+	"net/http"
 )
 
 const contextRole = "role"
 
-// TODO recovery
 // get role from token and set it in context
 // tokens are based on jwt on Authorization header
 func FetchToken(c *gin.Context) {
@@ -20,18 +19,18 @@ func FetchToken(c *gin.Context) {
 		return
 	}
 
-	role, err := getRoleFromToken(authHeader[7:])
+	role, err := middleware.GetRoleFromToken(authHeader[7:])
 	if err != nil {
 		framework.Error(c, http.StatusUnauthorized, "invalid jwt token")
 		return
 	}
 
-	c.Set(contextRole, role)
+	c.Set(contextRole, Role(role.(string)))
 	c.Next()
 }
 
 // validates given role with current user's role
-func Auth(role user.Role) gin.HandlerFunc {
+func Auth(role Role) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		r, ok := c.Get(contextRole)
 		if !ok {
@@ -39,7 +38,7 @@ func Auth(role user.Role) gin.HandlerFunc {
 			return
 		}
 
-		if r.(user.Role) != role {
+		if r.(Role) != role {
 			c.AbortWithError(http.StatusBadRequest, errors.New("you don't have permission"))
 			return
 		}

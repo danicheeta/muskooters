@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	Ready      State = iota
+	Ready State = iota
 	BatteryLow
 	Bounty
 	Riding
@@ -14,12 +14,12 @@ const (
 )
 
 var stringToState = map[string]State{
-	"Ready":       Ready,
+	"Ready":      Ready,
 	"BatteryLow": BatteryLow,
-	"Bounty":      Bounty,
-	"Riding":      Riding,
-	"Collected":   Collected,
-	"Dropped":     Dropped,
+	"Bounty":     Bounty,
+	"Riding":     Riding,
+	"Collected":  Collected,
+	"Dropped":    Dropped,
 }
 
 type State int

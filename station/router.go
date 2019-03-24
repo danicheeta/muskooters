@@ -3,27 +3,27 @@ package station
 import (
 	"muskooters/services/framework"
 	"muskooters/user"
-	"muskooters/user/middleware"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"errors"
-	"muskooters/services/assert"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"muskooters/services/assert"
 )
 
 type Route struct{}
 
 func (Route) Routes(e *gin.Engine) {
 	g := e.Group("scooter")
-	g.Use(middleware.FetchToken)
-	g.GET(":id/state", middleware.Auth(user.Zeus), getScooterState)
+	g.Use(user.FetchToken)
+	g.GET(":id/state", user.Auth(user.Zeus), getScooterState)
 	g.POST(":id/state", setScooterState)
-	g.POST("", middleware.Auth(user.Zeus), registerScooter)
+	g.POST("", user.Auth(user.Zeus), registerScooter)
 }
 
 // create new scooter only with admin permission
 func registerScooter(c *gin.Context) {
+	panic("YAAA ALI")
 	s := NewScooter()
 	c.JSON(http.StatusOK, s)
 }
@@ -41,7 +41,7 @@ func getScooterState(c *gin.Context) {
 }
 
 func setScooterState(c *gin.Context) {
-	var payload struct{
+	var payload struct {
 		State string
 	}
 	err := c.Bind(&payload)

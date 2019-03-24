@@ -1,21 +1,21 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
+	"muskooters/services/assert"
 	"muskooters/services/framework"
 	"muskooters/user/middleware"
-	"golang.org/x/crypto/bcrypt"
-	"muskooters/services/assert"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"github.com/kataras/iris/core/errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (Route) Routes(e *gin.Engine) {
 	g := e.Group("user")
 	g.POST("login", login)
-	g.Use(middleware.FetchToken)
-	g.POST("register", middleware.Auth(Zeus), register)
+	g.Use(FetchToken)
+	g.POST("register", Auth(Zeus), register)
 }
 
 func login(c *gin.Context) {

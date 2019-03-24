@@ -5,7 +5,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pkg/errors"
 	"muskooters/services/assert"
-	"muskooters/user"
 )
 
 const secret = "muskuters+"
@@ -23,7 +22,7 @@ func GenToken(role string) string {
 }
 
 // fetch users role from token
-func getRoleFromToken(s string) (user.Role, error) {
+func GetRoleFromToken(s string) (interface{}, error) {
 	token, err := jwt.Parse(s, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
@@ -35,7 +34,7 @@ func getRoleFromToken(s string) (user.Role, error) {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return user.Role(claims["role"].(string)), nil
+		return claims["role"].(string), nil
 	}
 
 	return "", errors.New("invalid token")
