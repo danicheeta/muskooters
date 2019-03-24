@@ -13,10 +13,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/sirupsen/logrus"
 	"muskooters/user/routes"
+	"muskooters/station"
 )
 
 const appName = "muskooters"
-var _ routes.Route
+
+var (
+	_ routes.Route
+	_ station.Route
+)
 
 func main() {
 	config.Init(appName)

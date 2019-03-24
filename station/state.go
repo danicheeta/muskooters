@@ -2,16 +2,16 @@ package station
 
 import "muskooters/user"
 
-type state int
+type State int
 
 type Transitions struct {
-	From  state
-	To    state
+	From  State
+	To    State
 	Roles []user.Role
 }
 
 const (
-	Ready      state = iota
+	Ready      State = iota
 	BatteryLow
 	Bounty
 	Riding
