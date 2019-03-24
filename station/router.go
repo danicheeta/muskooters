@@ -16,14 +16,13 @@ type Route struct{}
 func (Route) Routes(e *gin.Engine) {
 	g := e.Group("scooter")
 	g.Use(user.FetchToken)
+	g.POST("", user.Auth(user.Zeus), registerScooter)
 	g.GET(":id/state", user.Auth(user.Zeus), getScooterState)
 	g.POST(":id/state", setScooterState)
-	g.POST("", user.Auth(user.Zeus), registerScooter)
 }
 
 // create new scooter only with admin permission
 func registerScooter(c *gin.Context) {
-	panic("YAAA ALI")
 	s := NewScooter()
 	c.JSON(http.StatusOK, s)
 }

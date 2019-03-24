@@ -12,10 +12,16 @@ import (
 )
 
 func (Route) Routes(e *gin.Engine) {
-	g := e.Group("user")
-	g.POST("login", login)
-	g.Use(FetchToken)
-	g.POST("register", Auth(Zeus), register)
+	e.POST("login/user", login)
+	e.GET("login/scooter", scooterLogin)
+	e.POST("hunter", FetchToken, Auth(Zeus), register)
+}
+
+func scooterLogin(c *gin.Context) {
+	t := jwt.GenToken(string(Scooter))
+	c.JSON(http.StatusOK, struct {
+		Token string
+	}{t})
 }
 
 func login(c *gin.Context) {
