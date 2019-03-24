@@ -19,12 +19,18 @@ func (Route) Routes(e *gin.Engine) {
 	g.POST("", user.Auth(user.Zeus), registerScooter)
 	g.GET(":id/state", user.Auth(user.Zeus), getScooterState)
 	g.POST(":id/state", setScooterState)
+
+	e.GET("hunter/bounty", user.FetchToken, user.Auth(user.Hunter), getBounty)
 }
 
 // create new scooter only with admin permission
 func registerScooter(c *gin.Context) {
 	s := NewScooter()
 	c.JSON(http.StatusOK, s)
+}
+
+func getBounty(c *gin.Context) {
+	c.JSON(http.StatusOK, getScootersWithBountyState())
 }
 
 func getScooterState(c *gin.Context) {

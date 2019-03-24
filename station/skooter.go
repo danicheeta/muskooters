@@ -51,6 +51,17 @@ func SetScooterState(id bson.ObjectId, s State) error {
 
 }
 
+func getScootersWithBountyState() []Scooter {
+	scooters := []Scooter{}
+
+	c := mongo.GetDB().C(collectionName)
+	if err := c.Find(bson.M{"state": Bounty}).All(&scooters); err != nil {
+		assert.Nil(err)
+	}
+
+	return scooters
+}
+
 // updates state status in database
 func (scooter Scooter) CommitTransit() {
 	SetScooterState(scooter.ID, scooter.State)
