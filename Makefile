@@ -1,5 +1,7 @@
 include .env
 
 run:
-	go install
-	bin/muskooters
+	docker-compose up
+
+test:
+	go test muskooters/station
