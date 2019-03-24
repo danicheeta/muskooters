@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kataras/iris/core/errors"
 	"muskooters/services/framework"
-	"muskooters/user/middleware"
+	"muskooters/user/jwt"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func FetchToken(c *gin.Context) {
 		return
 	}
 
-	role, err := middleware.GetRoleFromToken(authHeader[7:])
+	role, err := jwt.GetRoleFromToken(authHeader[7:])
 	if err != nil {
 		framework.Error(c, http.StatusUnauthorized, "invalid jwt token")
 		return

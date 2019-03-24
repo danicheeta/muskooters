@@ -3,7 +3,7 @@ package user
 import (
 	"muskooters/services/assert"
 	"muskooters/services/framework"
-	"muskooters/user/middleware"
+	"muskooters/user/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -38,7 +38,7 @@ func login(c *gin.Context) {
 		return
 	}
 
-	t := middleware.GenToken(string(dbuser.Role))
+	t := jwt.GenToken(string(dbuser.Role))
 	c.JSON(http.StatusOK, struct {
 		Token string
 	}{t})
@@ -58,7 +58,7 @@ func register(c *gin.Context) {
 	err = Add(u.Username, string(pwd), u.Role)
 	assert.Nil(err)
 
-	t := middleware.GenToken(string(u.Role))
+	t := jwt.GenToken(string(u.Role))
 	c.JSON(http.StatusOK, struct {
 		Token string
 	}{t})

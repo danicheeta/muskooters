@@ -2,6 +2,7 @@ package station
 
 import (
 	"muskooters/user"
+	"muskooters/services/assert"
 )
 
 const (
@@ -50,13 +51,17 @@ var graph = []Transition{
 	{From: Dropped, To: Ready, Roles: hRoles},
 }
 
-// TODO error handling
 // wrap to query easier
 func init() {
 	for _, t := range graph {
-		from := t.From
+		from, to := t.From, t.To
+
 		if f, ok := hashMap[from]; ok {
-			f[t.To] = t.Roles
+			// assert cause that's invalid type of graph
+			_, ok := hashMap[from][to]
+			assert.True(!ok)
+
+			f[to] = t.Roles
 		} else {
 			hashMap[from] = map[State][]user.Role{t.To: t.Roles}
 		}
