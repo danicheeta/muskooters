@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"github.com/kataras/iris/core/errors"
 	"muskooters/user"
+	"net/http"
 )
 
 const contextRole = "role"

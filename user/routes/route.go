@@ -3,11 +3,11 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"muskooters/services/framework"
-	"muskooters/user/middleware"
 	"muskooters/user"
+	"muskooters/user/middleware"
 )
 
-type Route struct {}
+type Route struct{}
 
 func (Route) Routes(e *gin.Engine) {
 	g := e.Group("user")
@@ -16,6 +16,6 @@ func (Route) Routes(e *gin.Engine) {
 	g.POST("register", middleware.Auth(user.Zeus), register)
 }
 
-func init(){
+func init() {
 	framework.Register(Route{})
 }

@@ -2,11 +2,11 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"muskooters/user"
-	"net/http"
-	"muskooters/user/middleware"
 	"golang.org/x/crypto/bcrypt"
 	"muskooters/services/assert"
+	"muskooters/user"
+	"muskooters/user/middleware"
+	"net/http"
 )
 
 func login(c *gin.Context) {

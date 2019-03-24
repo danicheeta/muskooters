@@ -1,14 +1,15 @@
 package station
 
 import (
-	"github.com/gin-gonic/gin"
-	"muskooters/user/middleware"
 	"muskooters/services/framework"
 	"muskooters/user"
+	"muskooters/user/middleware"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-type Route struct {}
+type Route struct{}
 
 func (Route) Routes(e *gin.Engine) {
 	g := e.Group("scooter")
@@ -33,6 +34,6 @@ func getScooterState(c *gin.Context) {
 	c.JSON(http.StatusOK, s)
 }
 
-func init(){
+func init() {
 	framework.Register(Route{})
 }

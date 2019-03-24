@@ -3,9 +3,9 @@ package user
 type Role string
 
 const (
-	Zeus   Role = "admin"
-	Hunter Role = "hunter"
-	Client Role = "client"
+	Zeus    Role = "admin"
+	Hunter  Role = "hunter"
+	Client  Role = "client"
 	Scooter Role = "scooter"
 )
 

@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/pkg/errors"
 	"muskooters/services/assert"
 	"muskooters/user"
-	"fmt"
-	"github.com/pkg/errors"
 )
 
 const secret = "muskuters+"

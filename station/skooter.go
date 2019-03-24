@@ -1,11 +1,11 @@
 package station
 
 import (
-	"github.com/globalsign/mgo/bson"
-	"muskooters/services/mongo"
-	"muskooters/services/assert"
-	"github.com/globalsign/mgo"
 	"errors"
+	"github.com/globalsign/mgo"
+	"github.com/globalsign/mgo/bson"
+	"muskooters/services/assert"
+	"muskooters/services/mongo"
 )
 
 const collectionName = "scooters"

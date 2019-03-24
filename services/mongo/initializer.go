@@ -2,8 +2,8 @@ package mongo
 
 import (
 	"github.com/globalsign/mgo"
-	"muskooters/services/config"
 	"muskooters/services/assert"
+	"muskooters/services/config"
 	"muskooters/services/initializer"
 )
 
