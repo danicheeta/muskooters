@@ -28,13 +28,13 @@ func login(c *gin.Context) {
 	dbuser, err := GetByName(u.Username)
 	if err != nil {
 		logrus.Errorln("login route:", err)
-		framework.Error(c, http.StatusNotFound, "user not found")
+		framework.Error(c, http.StatusUnauthorized, "user not found")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(dbuser.Password), []byte(u.Password)); err != nil {
 		logrus.Errorln("login route:", err)
-		framework.Error(c, http.StatusNotFound, "invalid password")
+		framework.Error(c, http.StatusUnauthorized, "invalid password")
 		return
 	}
 
