@@ -6,7 +6,9 @@ import (
 )
 
 var (
+	// role does not have permission for requested transition
 	ErrNotAuthorized     = errors.New("not authorized with such role")
+	// transition is not valid in defined machine
 	ErrInvalidTransition = errors.New("invalid transition destination")
 )
 
@@ -21,6 +23,7 @@ func (scooter *Scooter) Transit(to State, role user.Role) error {
 	return nil
 }
 
+// updates state status in database
 func (scooter Scooter)commitTransit() {
 	SetScooterState(scooter.ID, scooter.State)
 }

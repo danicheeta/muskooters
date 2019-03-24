@@ -6,7 +6,6 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"muskooters/services/assert"
 	"muskooters/services/mongo"
-	"fmt"
 )
 
 const collectionName = "scooters"
@@ -18,6 +17,7 @@ type Scooter struct {
 	State State
 }
 
+// creates new scooter only by admin role permission
 func NewScooter() Scooter {
 	id := bson.NewObjectId()
 	scooter := Scooter{ID: id, State: starterState}
@@ -29,6 +29,7 @@ func NewScooter() Scooter {
 	return scooter
 }
 
+// fetch scooter from database
 func GetScooter(id string) (Scooter, error) {
 	objID := bson.ObjectIdHex(id)
 	c := mongo.GetDB().C(collectionName)
@@ -43,6 +44,7 @@ func GetScooter(id string) (Scooter, error) {
 	return Scooter{objID, s.State}, nil
 }
 
+// update scooter's state status
 func SetScooterState(id bson.ObjectId, s State) {
 	c := mongo.GetDB().C(collectionName)
 	err := c.Update(bson.M{"_id": id}, bson.M{"state": s})

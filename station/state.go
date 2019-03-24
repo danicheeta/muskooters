@@ -14,12 +14,12 @@ const (
 )
 
 var stringToState = map[string]State{
-	"ready":       Ready,
-	"battery-low": BatteryLow,
-	"bounty":      Bounty,
-	"riding":      Riding,
-	"collected":   Collected,
-	"dropped":     Dropped,
+	"Ready":       Ready,
+	"BatteryLow": BatteryLow,
+	"Bounty":      Bounty,
+	"Riding":      Riding,
+	"Collected":   Collected,
+	"Dropped":     Dropped,
 }
 
 type State int

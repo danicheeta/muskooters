@@ -9,6 +9,7 @@ import (
 
 const userTable = "users"
 
+// creates new user
 func Add(username, pass string, role Role) error {
 	q := fmt.Sprintf("insert into %s (username, passwd, role) values (?,?,?)", userTable)
 	_, err := mysql.GetDBMap().Exec(q, username, hashString(pass), role)
@@ -19,6 +20,7 @@ func Add(username, pass string, role Role) error {
 	return nil
 }
 
+// fetch user by it's name
 func GetByName(username string) (User, error) {
 	var user User
 	q := fmt.Sprintf("select * from %s where username=?", userTable)

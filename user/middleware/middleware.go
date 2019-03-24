@@ -9,6 +9,8 @@ import (
 
 const contextRole = "role"
 
+// get role from token and set it in context
+// tokens are based on jwt on Authorization header
 func FetchToken(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
 	if authHeader == "" {
@@ -16,7 +18,12 @@ func FetchToken(c *gin.Context) {
 		return
 	}
 
-	role, err := getRoleFromToken(authHeader)
+	if len(authHeader) < 7 || authHeader[:6] != "bearer" {
+		c.AbortWithError(http.StatusBadRequest, errors.New("invalid token"))
+		return
+	}
+
+	role, err := getRoleFromToken(authHeader[7:])
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, errors.New("invalid token"))
 		return
@@ -26,6 +33,7 @@ func FetchToken(c *gin.Context) {
 	c.Next()
 }
 
+// validates given role with current user's role
 func Auth(role user.Role) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		r, ok := c.Get(contextRole)

@@ -10,6 +10,7 @@ import (
 
 const secret = "muskuters+"
 
+// generate token including just a role
 func GenToken(role string) string {
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"role": role,
@@ -21,6 +22,7 @@ func GenToken(role string) string {
 	return token
 }
 
+// fetch users role from token
 func getRoleFromToken(s string) (user.Role, error) {
 	token, err := jwt.Parse(s, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
