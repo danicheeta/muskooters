@@ -14,20 +14,20 @@ services:
      volumes:
        - mongo:/data/db
      environment:
-       MONGO_INITDB_ROOT_USERNAME: root
-       MONGO_INITDB_ROOT_PASSWORD: root
+       MONGO_INITDB_DATABASE: muskooters
 
    muskooter:
      depends_on:
        - mysql
        - mongo
      build: .
+     ports:
+     - "3412:3412"
      restart: always
      environment:
        MUSKOOTERS_PORT: :3412
        MUSKOOTERS_MYSQL_URL: root:@tcp(mysql:3306)/muskooters
-       MUSKOOTERS_MONGO_USER: root
-       MUSKOOTERS_MONGO_PASS: root
+       MUSKOOTERS_MONGO_URL: mongo:27017/muskooters
        MUSKOOTERS_MONGO_DB_NAME: muskooters
        MUSKOOTERS_MIGRATION_DIR: /go/src/muskooters/migrations
 
