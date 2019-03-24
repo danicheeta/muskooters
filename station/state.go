@@ -12,6 +12,7 @@ const (
 	Riding
 	Collected
 	Dropped
+	Unknown
 )
 
 var stringToState = map[string]State{
@@ -21,6 +22,7 @@ var stringToState = map[string]State{
 	"Riding":     Riding,
 	"Collected":  Collected,
 	"Dropped":    Dropped,
+	"Unknown":    Unknown,
 }
 
 type State int
@@ -49,6 +51,7 @@ var graph = []Transition{
 	{From: Bounty, To: Collected, Roles: hRoles},
 	{From: Collected, To: Dropped, Roles: hRoles},
 	{From: Dropped, To: Ready, Roles: hRoles},
+	{From: Ready, To: Unknown, Roles: sRoles},
 }
 
 // wrap to query easier
