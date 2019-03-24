@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"errors"
 	"muskooters/services/assert"
+	"github.com/sirupsen/logrus"
 )
 
 type Route struct{}
@@ -30,7 +31,8 @@ func getScooterState(c *gin.Context) {
 	id := c.Param("id")
 	scooter, err := GetScooter(id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		logrus.Errorln("getScooterState route:", err)
+		framework.Error(c, http.StatusNotFound, "scooter id not found")
 		return
 	}
 
@@ -44,14 +46,16 @@ func setScooterState(c *gin.Context) {
 	}
 	err := c.Bind(&payload)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		logrus.Errorln("setScooterState route:", err)
+		framework.Error(c, http.StatusBadRequest, "invalid payload")
 		return
 	}
 
 	id := c.Param("id")
 	scooter, err := GetScooter(id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		logrus.Errorln("setScooterState route:", err)
+		framework.Error(c, http.StatusNotFound, "scooter id not found")
 		return
 	}
 
@@ -60,12 +64,15 @@ func setScooterState(c *gin.Context) {
 
 	state, ok := stringToState[payload.State]
 	if !ok {
-		c.JSON(http.StatusBadRequest, errors.New("invalid state name"))
+		msg := "invalid state name"
+		logrus.Errorln("setScooterState route:", errors.New(msg))
+		framework.Error(c, http.StatusNotFound, msg)
 		return
 	}
 
 	if err = scooter.Transit(state, userRole.(user.Role)); err != nil {
-		c.JSON(http.StatusBadRequest, errors.New("invalid state name"))
+		logrus.Errorln("setScooterState route:", err)
+		framework.Error(c, http.StatusNotFound, err.Error())
 		return
 	}
 

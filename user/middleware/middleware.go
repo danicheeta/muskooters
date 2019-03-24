@@ -9,6 +9,7 @@ import (
 
 const contextRole = "role"
 
+// TODO recovery
 // get role from token and set it in context
 // tokens are based on jwt on Authorization header
 func FetchToken(c *gin.Context) {

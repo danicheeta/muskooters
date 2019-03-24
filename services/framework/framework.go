@@ -34,6 +34,12 @@ func (i *initer) Initialize() func() {
 	return nil
 }
 
+func Error(c *gin.Context, status int, err string) {
+	c.JSON(status, struct {
+		Error string
+	}{err})
+}
+
 // Register a new controller class
 func Register(c ...Routes) {
 	all = append(all, c...)

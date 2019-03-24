@@ -7,6 +7,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"muskooters/services/assert"
 	"net/http"
+	"github.com/sirupsen/logrus"
+	"github.com/kataras/iris/core/errors"
 )
 
 func (Route) Routes(e *gin.Engine) {
@@ -25,14 +27,14 @@ func login(c *gin.Context) {
 
 	dbuser, err := GetByName(u.Username)
 	if err != nil {
-		c.JSON(http.StatusNotFound, nil)
+		logrus.Errorln("login route:", err)
+		framework.Error(c, http.StatusNotFound, "user not found")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(dbuser.Password), []byte(u.Password)); err != nil {
-		c.JSON(http.StatusBadRequest, struct {
-			Error string
-		}{"invalid password"})
+		logrus.Errorln("login route:", err)
+		framework.Error(c, http.StatusNotFound, "invalid password")
 		return
 	}
 
@@ -45,7 +47,8 @@ func login(c *gin.Context) {
 func register(c *gin.Context) {
 	var u User
 	if err := c.Bind(&u); err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
+		logrus.Errorln("user register route:", err)
+		framework.Error(c, http.StatusBadRequest, "invalid payload")
 		return
 	}
 
