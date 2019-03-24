@@ -76,6 +76,7 @@ func setScooterState(c *gin.Context) {
 		return
 	}
 
+	scooter.CommitTransit()
 	c.JSON(http.StatusOK, scooter)
 }
 

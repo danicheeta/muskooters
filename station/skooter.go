@@ -45,8 +45,13 @@ func GetScooter(id string) (Scooter, error) {
 }
 
 // update scooter's state status
-func SetScooterState(id bson.ObjectId, s State) {
+func SetScooterState(id bson.ObjectId, s State) error {
 	c := mongo.GetDB().C(collectionName)
-	err := c.Update(bson.M{"_id": id}, bson.M{"state": s})
-	assert.Nil(err)
+	return c.Update(bson.M{"_id": id}, bson.M{"state": s})
+
+}
+
+// updates state status in database
+func (scooter Scooter) CommitTransit() {
+	SetScooterState(scooter.ID, scooter.State)
 }
