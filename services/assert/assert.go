@@ -1,6 +1,8 @@
 package assert
 
-import "github.com/sirupsen/logrus"
+import (
+	"github.com/sirupsen/logrus"
+)
 
 // Nil panic if the test is not nil
 func Nil(test interface{}) {
@@ -17,4 +19,15 @@ func True(test bool) {
 	if !test {
 		logrus.Panicln("must be true but is not")
 	}
+}
+
+// returns true if all are not empty
+func String(runes ...string) bool {
+	for i := range runes {
+		if runes[i] == "" {
+			return false
+		}
+	}
+
+	return true
 }
