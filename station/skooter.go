@@ -6,6 +6,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"muskooters/services/assert"
 	"muskooters/services/mongo"
+	"fmt"
 )
 
 const collectionName = "scooters"
@@ -42,9 +43,8 @@ func GetScooter(id string) (Scooter, error) {
 	return Scooter{objID, s.State}, nil
 }
 
-func SetScooterState(id string, s State) {
-	objID := bson.ObjectIdHex(id)
+func SetScooterState(id bson.ObjectId, s State) {
 	c := mongo.GetDB().C(collectionName)
-	err := c.Update(bson.M{"_id": objID}, bson.M{"state": s})
+	err := c.Update(bson.M{"_id": id}, bson.M{"state": s})
 	assert.Nil(err)
 }

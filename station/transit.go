@@ -17,7 +17,12 @@ func (scooter *Scooter) Transit(to State, role user.Role) error {
 	}
 
 	scooter.State = to
+	scooter.commitTransit()
 	return nil
+}
+
+func (scooter Scooter)commitTransit() {
+	SetScooterState(scooter.ID, scooter.State)
 }
 
 func validateTransit(from, to State, transporterRole user.Role) error {
