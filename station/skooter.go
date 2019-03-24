@@ -28,23 +28,23 @@ func NewScooter() Scooter {
 	return scooter
 }
 
-func GetScooterState(id string) (State, error) {
+func GetScooter(id string) (Scooter, error) {
 	objID := bson.ObjectIdHex(id)
 	c := mongo.GetDB().C(collectionName)
 
 	var s Scooter
 	err := c.FindId(objID).One(&s)
 	if err == mgo.ErrNotFound {
-		return 0, errors.New("scooter not found")
+		return Scooter{}, errors.New("scooter not found")
 	}
 	assert.Nil(err)
 
-	return s.State, nil
+	return Scooter{objID, s.State}, nil
 }
 
-//func SetScooterState(id string, s State) {
-//	objID := bson.ObjectIdHex(id)
-//	c := mongo.GetDB().C(collectionName)
-//	err := c.Update(bson.M{"_id": objID}, bson.M{"state": s})
-//	assert.Nil(err)
-//}
+func SetScooterState(id string, s State) {
+	objID := bson.ObjectIdHex(id)
+	c := mongo.GetDB().C(collectionName)
+	err := c.Update(bson.M{"_id": objID}, bson.M{"state": s})
+	assert.Nil(err)
+}

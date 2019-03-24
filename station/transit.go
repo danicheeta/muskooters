@@ -11,8 +11,13 @@ var (
 )
 
 // validates a scooter transit action
-func (scooter Scooter) Transit(to State, role user.Role) error {
-	return validateTransit(scooter.State, to, role)
+func (scooter *Scooter) Transit(to State, role user.Role) error {
+	if err := validateTransit(scooter.State, to, role); err != nil {
+		return err
+	}
+
+	scooter.State = to
+	return nil
 }
 
 func validateTransit(from, to State, transporterRole user.Role) error {

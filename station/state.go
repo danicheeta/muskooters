@@ -1,18 +1,26 @@
 package station
 
 import (
-	"fmt"
 	"muskooters/user"
 )
 
 const (
-	Ready State = iota
+	Ready      State = iota
 	BatteryLow
 	Bounty
 	Riding
 	Collected
 	Dropped
 )
+
+var stringToState = map[string]State{
+	"ready":       Ready,
+	"battery-low": BatteryLow,
+	"bounty":      Bounty,
+	"riding":      Riding,
+	"collected":   Collected,
+	"dropped":     Dropped,
+}
 
 type State int
 
