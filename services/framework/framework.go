@@ -20,6 +20,8 @@ type initer struct {
 
 func (i *initer) Initialize() func() {
 	port := config.MustString("PORT")
+	gin.SetMode(gin.ReleaseMode)
+
 	e := gin.New()
 	e.Use(Recovery)
 
